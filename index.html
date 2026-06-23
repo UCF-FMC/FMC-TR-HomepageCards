@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FMC Training & Resources</title>
+
+  <style>
+    :root {
+      --ucf-gold: #ffd700;
+      --ucf-blue: #0057b8;
+      --text: #111827;
+      --muted-text: #1f2933;
+      --border: #d8dee6;
+      --green: #0b7a4b;
+      --navy: #00008b;
+      --orange: #f26a21;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--muted-text);
+      background: #ffffff;
+    }
+
+    .page-wrap {
+      max-width: 1500px;
+      margin: 0 auto;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .quick-links {
+      background: var(--ucf-gold);
+      padding: 16px 12px;
+      text-align: center;
+      margin-bottom: 28px;
+      font-size: 1.15rem;
+      font-weight: bold;
+    }
+
+    .quick-links a {
+      display: inline-block;
+      margin: 6px 14px;
+      color: #000;
+      text-decoration: underline;
+    }
+
+    .quick-links span {
+      color: #111827;
+    }
+
+    .intro {
+      font-size: 16px;
+      line-height: 1.6;
+      margin: 0 0 30px;
+      padding: 0 12px;
+      color: #000;
+    }
+
+    .intro a {
+      color: var(--ucf-blue);
+    }
+
+    .section {
+      padding: 0 8px;
+      margin-bottom: 34px;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      margin: 24px 0 14px;
+      padding-left: 12px;
+      border-left: 5px solid;
+      color: var(--text);
+    }
+
+    .card-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .resource-card {
+      width: 230px;
+      min-height: 130px;
+      padding: 18px;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-top: 10px solid;
+      border-radius: 6px;
+      background: #fff;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .resource-card:hover,
+    .resource-card:focus {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+      outline: none;
+    }
+
+    .resource-card:focus {
+      outline: 3px solid #f9c80e;
+      outline-offset: 3px;
+    }
+
+    .resource-card img {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+      margin-bottom: 8px;
+    }
+
+    .resource-card-title {
+      display: block;
+      font-size: 1.15rem;
+      line-height: 1.3;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #000;
+      margin: 28px 0;
+    }
+
+    @media (max-width: 700px) {
+      .card-grid {
+        display: block;
+      }
+
+      .resource-card {
+        display: block;
+        width: auto;
+        margin-bottom: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page-wrap">
+    <img
+      class="hero-image"
+      src="https://webcourses.ucf.edu/courses/1383226/files/123680952/preview"
+      alt="FMC's Training and Resources: On-demand resources for any time and anywhere."
+    />
+
+    <nav class="quick-links" aria-label="Quick links">
+      <a href="https://webcourses.ucf.edu/courses/1434886/pages/fmc-workshop-recordings">Workshop Recordings</a>
+      <span>|</span>
+      <a href="https://webcourses.ucf.edu/courses/1434886/pages/equipment-tutorials-%7C-overview">Equipment Tutorials</a>
+      <span>|</span>
+      <a href="https://cdl.ucf.edu/support/fmc/booking/">Schedule an Appointment</a>
+      <span>|</span>
+      <a href="https://cdl.ucf.edu/support/fmc/events-workshops/">Upcoming Workshops</a>
+    </nav>
+
+    <p class="intro">
+      This online course, hosted by
+      <a href="https://cdl.ucf.edu/support/fmc/">UCF's Faculty Multimedia Center</a>
+      (FMC), is your go-to resource for on-demand training modules and troubleshooting guides for EdTech tools,
+      generative AI, post-production software, equipment, and much more. The materials and guides are continuously
+      updated to meet your instructional needs.
+    </p>
+
+    <div id="resource-sections"></div>
+  </main>
+
+  <script>
+    /*
+      FMC Training & Resources Card Builder
+      -------------------------------------
+      To add, remove, or edit cards, update the "sections" array below.
+
+      Each section has:
+        title: The heading shown above the cards
+        color: The accent color used on the heading and card top border
+        cards: A list of card objects
+
+      Each card has:
+        title: The card text
+        url: The destination link
+        image: The image URL
+        alt: Optional image alt text. Use "" for decorative icons.
+    */
+
+    function makeCard(title, url, image, color, alt = "") {
+      const card = document.createElement("a");
+      card.className = "resource-card";
+      card.href = url;
+      card.style.borderTopColor = color;
+
+      const img = document.createElement("img");
+      img.src = image;
+      img.alt = alt;
+
+      const label = document.createElement("span");
+      label.className = "resource-card-title";
+      label.textContent = title;
+
+      card.appendChild(img);
+      card.appendChild(label);
+
+      return card;
+    }
+
+    function makeSection(section) {
+      const wrapper = document.createElement("section");
+      wrapper.className = "section";
+
+      const heading = document.createElement("h2");
+      heading.className = "section-title";
+      heading.textContent = section.title;
+      heading.style.borderLeftColor = section.color;
+
+      const grid = document.createElement("div");
+      grid.className = "card-grid";
+
+      section.cards.forEach(card => {
+        grid.appendChild(
+          makeCard(card.title, card.url, card.image, section.color, card.alt)
+        );
+      });
+
+      wrapper.appendChild(heading);
+      wrapper.appendChild(grid);
+
+      return wrapper;
+    }
+
+    const sections = [
+      {
+        title: "Multimedia Production & Accessibility",
+        color: "#0b7a4b",
+        cards: [
+          {
+            title: "Equipment Tutorials",
+            url: "https://webcourses.ucf.edu/courses/1434886/pages/equipment-tutorials-%7C-overview",
+            image: "https://webcourses.ucf.edu/courses/1434886/files/106331693/preview",
+            alt: ""
+          },
+          {
+            title: "Recording in OBS Studio",
+            url: "https://webcourses.ucf.edu/courses/1434886/pages/obs-%7C-overview?module_item_id=17030160",
+            image: "https://webcourses.ucf.edu/courses/1434886/files/106331678/preview",
+            alt: ""
+          },
+          {
+            title: "360 Cameras and Media",
+            url: "https://webcourses.ucf.edu/courses/1434886/pages/360-media-%7C-overview-2?module_item_id=18877002",
+            image: "https://webcourses.ucf.edu/courses/1434886/files/106926983/preview",
+            alt: ""
+          },
+          {
+            title: "Videos from PowerPoint",
+            url: "https://webcourses.ucf.edu/courses/1434886/pages/powerpoint-%7C-overview?module_item_id=19740578",
+            image: "https://webcourses.ucf.edu/courses/1434886/files/115150364/preview",
+            alt: ""
+          },
+          {
+            title: "Digital Camera Basics",
+            url: "https://webcourses.ucf.edu/courses/1434886/pages/digital-camera-basics-%7C-overview?module_item_id=17027743",
+            image: "https://webcourses.ucf.edu/courses/1434886/files/106331752/preview",
+            alt: ""
+          },
+          {
+            title: "Audio Recording & Mics",
+            url: "https://webcourses.ucf.edu/courses/1434886/pages/audio-recording-%7C-overview?module_item_id=19796802",
+            image: "https://webcourses.ucf.edu/courses/1434886/files/115526424/preview",
+            alt: ""
+          },
+          {
+            title: "Open and Closed Captions",
+            url: "https://webcourses.ucf.edu/courses/1434886/pages/diy-captioning-%7C-overview",
+            image: "https://webcourses.ucf.edu/courses/1434886/files/106331659/preview",
+            alt: ""
+          },
+          {
+            title: "Audio Descriptions",
+            url: "https://webcourses.ucf.edu/courses/1434886/pages/ad-%7C-overview?module_item_id=19709898",
+            image: "https://webcourses.ucf.edu/courses/1434886/files/115366313/preview",
+            alt: ""
+          }
+        ]
+      },
+      {
+        title: "Multimedia Post-Production and Delivery",
+        color: "#00008b",
+        cards: [
+          {
+            title: "Video Editing in Clipchamp",
+            url: "https://webcourses.ucf.edu/courses/1434886/pages/clipchamp-%7C-overview",
+            image: "https://webcourses.ucf.edu/courses/1434886/files/106331712/preview",
+            alt: ""
+          },
+          {
+            title: "Video Editing in Premiere",
+            url: "https://webcourses.ucf.edu/courses/1434886/pages/adobe-premiere-pro-%7C-overview",
+            image: "https://webcourses.ucf.edu/courses/1434886/files/106331721/preview",
+            alt: ""
+          },
+          {
+            title: "Sharing Videos on YouTube",
+            url: "https://webcourses.ucf.edu/courses/1434886/pages/webcourse-content-on-youtube-%7C-overview",
+            image: "https://webcourses.ucf.edu/courses/1434886/files/106331746/preview",
+            alt: ""
+          },
+          {
+            title: "File & Asset Management",
+            url: "https://webcourses.ucf.edu/courses/1434886/pages/file-and-asset-management-%7C-overview",
+            image: "https://webcourses.ucf.edu/courses/1434886/files/106331726/preview",
+            alt: ""
+          }
+        ]
+      },
+      {
+        title: "Graphic and Image Editing",
+        color: "#f26a21",
+        cards: [
+          {
+            title: "Canva",
+            url: "https://webcourses.ucf.edu/courses/1434886/pages/canva-%7C-overview",
+            image: "https://webcourses.ucf.edu/courses/1434886/files/105654570/preview",
+            alt: ""
+          },
+          {
+            title: "Photoshop",
+            url: "https://webcourses.ucf.edu/courses/1434886/pages/adobe-photoshop-%7C-overview?module_item_id=18239256",
+            image: "https://webcourses.ucf.edu/courses/1434886/files/107033622/preview",
+            alt: ""
+          }
+        ]
+      },
+      {
+        title: "Innovative and Interactive Learning",
+        color: "#0057b8",
+        cards: [
+          {
+            title: "ThingLink",
+            url: "https://webcourses.ucf.edu/courses/1434886/pages/thinglink-%7C-overview?module_item_id=18085021",
+            image: "https://webcourses.ucf.edu/courses/1434886/files/114505166/preview",
+            alt: ""
+          },
+          {
+            title: "Generative AI",
+            url: "https://webcourses.ucf.edu/courses/1434886/pages/generative-ai-overview-3?module_item_id=17619311",
+            image: "https://webcourses.ucf.edu/courses/1434886/files/106331669/preview",
+            alt: ""
+          },
+          {
+            title: "AI Widgets in GitHub",
+            url: "https://webcourses.ucf.edu/courses/1434886/pages/clipchamp-%7C-overview",
+            image: "https://webcourses.ucf.edu/courses/1434886/files/123757898/preview",
+            alt: ""
+          }
+        ]
+      }
+    ];
+
+    const sectionsContainer = document.getElementById("resource-sections");
+
+    sections.forEach((section, index) => {
+      sectionsContainer.appendChild(makeSection(section));
+
+      if (index < sections.length - 1) {
+        sectionsContainer.appendChild(document.createElement("hr"));
+      }
+    });
+  </script>
+</body>
+</html>
