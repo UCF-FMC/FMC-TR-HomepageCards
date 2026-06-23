@@ -194,25 +194,26 @@
         alt: Optional image alt text. Use "" for decorative icons.
     */
 
-    function makeCard(title, url, image, color, alt = "") {
-      const card = document.createElement("a");
-      card.className = "resource-card";
-      card.href = url;
-      card.style.borderTopColor = color;
+function makeCard(title, url, image, color, alt = "") {
+  const card = document.createElement("a");
+  card.className = "resource-card";
+  card.href = url;
+  card.target = "_top"; // Opens the link in the full Canvas window, not inside the iframe
+  card.style.borderTopColor = color;
 
-      const img = document.createElement("img");
-      img.src = image;
-      img.alt = alt;
+  const img = document.createElement("img");
+  img.src = image;
+  img.alt = alt;
 
-      const label = document.createElement("span");
-      label.className = "resource-card-title";
-      label.textContent = title;
+  const label = document.createElement("span");
+  label.className = "resource-card-title";
+  label.textContent = title;
 
-      card.appendChild(img);
-      card.appendChild(label);
+  card.appendChild(img);
+  card.appendChild(label);
 
-      return card;
-    }
+  return card;
+}
 
     function makeSection(section) {
       const wrapper = document.createElement("section");
